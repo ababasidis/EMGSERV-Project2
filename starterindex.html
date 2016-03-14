@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"/>
+  	<title>Medical Information Search</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link rel="stylesheet" href="jquery-ui-1.11.4.custom/jquery-ui.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	<script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+	<script src="jquery-ui-1.11.4.custom/jquery-ui.js" type="text/javascript"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script src="js/scripts.js"></script>
+	<script src="scrollorama/css/normalize.css"></script>
+	<script src="scrollorama/css/style.css"></script>
+	<script src="js/jquery-1.7.1.min.js"></script>
+    <script src="js/jquery.scrollorama.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+ </head>
+
+  <body>
+ 	<section class="title">
+	  			<br><h2 style="font-size:48px;"><i class="fa fa-medkit"></i> MEDICAL INFORMATION SEARCH <i class="fa fa-medkit"></i></h2>
+	  			<h3 style="color:white;">For emergencies, please dial 911</h3><br> 		
+	</section>
+
+	  <div class="container">
+	  	<hr/>
+	  	<div class="row">
+		  	<div class="col-md-6">
+		  		<form  method="post" action="" id="Form1">
+				<fieldset><legend>Search Criteria</legend>
+				<p>
+				<select id="orgType" name="type" onchange="(this.value=='Physician')?$('#orgLabel').html('Physician\'s Name'):$('#orgLabel').html('Organization Name')"></select>
+				<input id="orgName" name="name" type="text" placeholder="organization name"><br><em> *can be partial - "vol" for "Volunteer"</em></p>
+				<select id="state" name="state" onchange="getCities(this.value)">
+						<option value="">All States</option>
+						<option value="AK">AK</option>
+
+						<option value="AL">AL</option>
+						<option value="AR">AR</option>
+						<option value="AZ">AZ</option>
+						<option value="CA">CA</option>
+						<option value="CO">CO</option>
+						<option value="CT">CT</option>
+
+						<option value="DC">DC</option>
+						<option value="DE">DE</option>
+						<option value="FL">FL</option>
+						<option value="GA">GA</option>
+						<option value="HI">HI</option>
+						<option value="IA">IA</option>
+
+						<option value="ID">ID</option>
+						<option value="IL">IL</option>
+						<option value="IN">IN</option>
+						<option value="KS">KS</option>
+						<option value="KY">KY</option>
+						<option value="LA">LA</option>
+
+						<option value="MA">MA</option>
+						<option value="MD">MD</option>
+						<option value="ME">ME</option>
+						<option value="MI">MI</option>
+						<option value="MN">MN</option>
+						<option value="MO">MO</option>
+
+						<option value="MS">MS</option>
+						<option value="MT">MT</option>
+						<option value="NC">NC</option>
+						<option value="ND">ND</option>
+						<option value="NE">NE</option>
+						<option value="NH">NH</option>
+
+						<option value="NJ">NJ</option>
+						<option value="NM">NM</option>
+						<option value="NV">NV</option>
+						<option value="NY" selected="selected">NY</option>
+						<option value="OH">OH</option>
+						<option value="OK">OK</option>
+
+						<option value="OR">OR</option>
+						<option value="PA">PA</option>
+						<option value="RI">RI</option>
+						<option value="SC">SC</option>
+						<option value="SD">SD</option>
+						<option value="TN">TN</option>
+
+						<option value="TX">TX</option>
+						<option value="UT">UT</option>
+						<option value="VA">VA</option>
+						<option value="VT">VT</option>
+						<option value="WA">WA</option>
+						<option value="WI">WI</option>
+
+						<option value="WV">WV</option>
+						<option value="WY">WY</option>
+
+					</select>
+					<span id="orgCitySearch"> </span><br><br>
+					<input id="county" type="text" placeholder="county"/>
+					<input id="zip" type="text" name="zip" placeholder="zip"/><br><br>
+					<div style="float:center; padding-bottom:5%;">
+						<input value="Show Results" onclick="checkSearch()" id="btnSearch" class="button" type="button"/>&nbsp;
+						<input type="reset" class="button" value="Reset Form" onclick="resetAll()"/>
+					</div>
+				</fieldset>
+				</form>
+
+				<fieldset>
+					<legend>Search Results</legend>
+					<div id="tabelOutput"><p>No results found</p></div>
+				</fieldset>
+
+			</div>
+			<div class="col-md-6">
+				<div style="text-align:center; color:white;" id="name-title"></div>
+		  		<div id="tabs">
+				  <ul>
+				    <li><a href="#fragment-1"><span>General</span></a></li>
+				    <li><a href="#fragment-2"><span>Locations</span></a></li>
+				    <li><a href="#fragment-3"><span>Training</span></a></li>
+				    <li><a href="#fragment-4"><span>Treatment</span></a></li>
+				    <li><a href="#fragment-5"><span>Facilities</span></a></li>
+				    <li><a href="#fragment-6"><span>Equipment</span></a></li>
+				    <li><a href="#fragment-7"><span>Physicians</span></a></li>
+				    <li><a href="#fragment-8"><span>People</span></a></li>
+				  </ul>
+				  <div id="fragment-1">
+				    <p>No general information found</p>
+									 
+				  </div>
+				  <div id="fragment-2">
+				    <p>No locations found</p>
+
+				  </div>
+				  <div id="fragment-3">
+				    <p>No training found</p>
+
+				  </div>
+				 <div id="fragment-4">
+					<p>No treatment found</p>
+
+				  </div>
+				  <div id="fragment-5">
+				    <p>No facilities found</p>
+									 
+				  </div>
+				  <div id="fragment-6">
+				    <p>No equipment found</p>
+									 
+				  </div>
+				  <div id="fragment-7">
+				    <p>No physicians found</p>
+									 
+				  </div>
+				  <div id="fragment-8">
+				    <p>No people found</p>
+									 
+				   </div>
+				</div>
+				<div style="padding-top:5%;">
+				<iframe style="float:right; position:relative;" width="100%" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/search?q=hospitals%20near%20rochester%20ny&key=AIzaSyAVl5qhf9nzJEzaeKn-d-bkNJhpzZSm_Ao"></iframe>
+				</div>
+			</div>
+
+		</div>
+
+
+		  <div class="row">
+		  	<footer>
+		  		<p>Built By Athanasios Babasidis &copy; ISTE 340</p>
+		  	</footer>
+		 </div>
+  	</div>
+  	<script>
+		$(function() {
+			$( "#tabs" ).tabs({
+			event: "mouseover"
+		});
+ 	});
+	</script>
+	<script>
+    	$(document).ready(function() {     
+        	var scrollorama = $.scrollorama({ blocks:'.scrollblock' });
+    	});
+	</script>
+
+
+	</body>
+</html>
